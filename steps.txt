@@ -1,0 +1,81 @@
+step 1
+in index.js
+create a simple setup
+
+const express = require("express");
+const app = express();
+app.listen(8000, () => {
+    console.log("App is listening");
+});
+
+step 2
+creat 3 folders
+    (i) modules--will define modules and database 
+    (ii) routes--will create all routes
+    (iii) controllers -- will write the bussiness logics and will manage the database
+
+step 3
+in routes folder
+     create userRoute.js file
+     in userRoute.js
+        const express=require("express");
+        const userRoute=express.Router();
+
+        userRoute.get("/", (req,res)=>{
+            res.send("Message);
+        });
+        modules.export=userRoute;
+
+step 4 in index.js
+    const userRouter = require("./routes/userRoute");
+    app.use("/", userRouter);
+
+step 5 in controller folder create userController.js file
+    module.exports = {
+    get: (req, res) => {
+        res.send({
+            message: "Successfully Created the useRouter!!!!!"
+        })
+    }
+}
+
+step 6 in userRoute
+    import the controller
+    const useConreoller = require("../controllers/userController")
+
+    change the code
+    userRouter.get("/", useConreoller.get);
+
+the final code structure is
+in index.js
+    const express = require("express");
+const app = express();
+
+const userRouter = require("./routes/userRoute");
+const loginRouter = require("./routes/loginRoute");
+
+app.use("/", userRouter);
+app.use("/login", loginRouter);
+
+app.listen(8000, () => {
+    console.log("App is listening");
+});
+
+inrouter page
+        const express = require("express");
+const loginRouter = express.Router();
+const loginConreoller = require("../controllers/loginController")
+
+loginRouter.get("/", loginConreoller.get);
+
+module.exports = loginRouter;
+
+in controller page
+
+module.exports = {
+    get: (req, res) => {
+        res.send({
+            message: "Successfully Created the useRouter!!!!!"
+        })
+    }
+}
